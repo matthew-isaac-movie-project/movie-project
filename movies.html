@@ -2,9 +2,99 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Movie Project</title>
+    <link rel="stylesheet" href="css/resets.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/movies.css">
 </head>
 <body>
+<div class="page-wrapper">
+    <div class="header-row">
+        <div class="header-wrapper">
+            <h1 class="header">
+                <span>C</span>
+                <span>i</span>
+                <span>n</span>
+                <span>e</span>
+                <span>m</span>
+                <span>a</span>
+                &nbsp;
+                <span>D</span>
+                <span>a</span>
+                <span>t</span>
+                <span>a</span>
+                <span>b</span>
+                <span>a</span>
+                <span>s</span>
+                <span>e</span>
+            </h1>
+        </div>
+    </div>
+    <div class="navbar">
+        <div class="navbar-header">
+            <button class="navbar-toggle" id="navbar-toggle">
+                <span class="navbar-toggle-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">My App</a>
+        </div>
+        <div class="navbar-search">
+            <input type="text" class="search-movies" placeholder="Search for movies...">
+            <input type="text" class="search-favorites" placeholder="Search for favorites...">
+        </div>
+        <div class="navbar-menu">
+            <ul>
+                <li><a href="#">Drama</a></li>
+                <li><a href="#">Comedy</a></li>
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Sci-Fi</a></li>
+                <li><a href="#">Anime</a></li>
+                <li><a href="#">Fantasy</a></li>
+            </ul>
+        </div>
+        <div class="navbar-genres">
+            <button class="navbar-genres-btn">Drama</button>
+            <button class="navbar-genres-btn">Comedy</button>
+            <button class="navbar-genres-btn">Action</button>
+            <button class="navbar-genres-btn">Sci-Fi</button>
+            <button class="navbar-genres-btn">Anime</button>
+            <button class="navbar-genres-btn">Fantasy</button>
+        </div>
+    </div>
 
+
+    <div class ="movie-card-row">
+        <div class="movie-container"></div>
+
+        <!--      <div class="movie-card">-->
+        <!--      <img src="/images/A-new-hope.jpg" alt="Movie Poster">-->
+        <!--      <h2 class="movie-title">Movie Title</h2>-->
+        <!--      <p class="movie-year">Year</p>-->
+        <!--      <p class="movie-genre">Genre</p>-->
+        <!--      <div class="button row">-->
+        <!--        <button class="add-btn">Add</button>-->
+        <!--        <label for="rating">Movie Rating:</label>-->
+        <!--        <select id="rating" name="rating">-->
+        <!--          <option value="1">1 star</option>-->
+        <!--          <option value="2">2 stars</option>-->
+        <!--          <option value="3">3 stars</option>-->
+        <!--          <option value="4">4 stars</option>-->
+        <!--          <option value="5">5 stars</option>-->
+        <!--        </select>-->
+        <!--      </div>-->
+        <!--  </div>-->
+        <!--      <div class="movie-card">-->
+        <!--    <img src="/images/A-new-hope.jpg" alt="Movie Poster">-->
+        <!--    <h2 class="movie-title">Movie Title</h2>-->
+        <!--    <p class="movie-year">Year</p>-->
+        <!--    <p class="movie-genre">Genre</p>-->
+        <!--    <div class="button row">-->
+        <!--      <button class="delete-btn">Delete</button>-->
+        <!--      <button class="edit-btn">Edit</button>-->
+        <!--      </select>-->
+        <!--    </div>-->
+        <!--  </div>-->
+    </div>
+</div>
+<script type="module" src="js/movie-project.js"></script>
 </body>
 </html>
