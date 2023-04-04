@@ -106,7 +106,8 @@ body {
 }
 
 img {
-    width: 200px;
+    width: auto;
+    height: 300px;
     align-content: center;
 ;
 }
@@ -350,3 +351,106 @@ select {
     padding-left: 500px;
 }
 
+.home-movie {
+    padding: 20px;
+}
+.home-movie button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #2f7bd7;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+    cursor: pointer;
+}
+.navbar-home-movie-btn:hover {
+    background-color: #0d478a;
+}
+
+#add-movie-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-color: #0e0e0e;
+    border-width: 10px;
+    background-color: #E30A0A;
+}
+
+#home-movie-title {
+    color: #e7eaec;
+    font-size: 20px;
+    margin: 10px 10px 10px 10px;
+    font-weight: bold;
+}
+
+#rating {
+    margin: 10px 10px 10px 10px;
+}
+
+#home-movie-submit{
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #2f7bd7;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+    cursor: pointer;
+}
+.loader-container {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    display: flex;
+    background: linear-gradient(blue, red);
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border:10px solid #FFF;
+    border-radius: 50%;
+    position: relative;
+    transform:rotate(45deg);
+    box-sizing: border-box;
+}
+.loader::before {
+    content: "";
+    position: absolute;
+    box-sizing: border-box;
+    inset:-10px;
+    border-radius: 50%;
+    border:10px solid #FF3D00;
+    animation: prixClipFix 2s infinite linear;
+}
+
+@keyframes prixClipFix {
+    0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
+    25%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
+    50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
+    75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
+    100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
+}
+
+.loader-container-hidden {
+    display: none;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
