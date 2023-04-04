@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="CSS/movies.css">
 </head>
 <body>
+<div class="loader-container">
+    <span class="loader"></span>
+</div>
 <div class="page-wrapper">
     <div class="header-row">
         <div class="header-wrapper">
@@ -57,16 +60,18 @@
         </div>
         <div class="navbar-genres">
             <button class="navbar-library-btn">Movie Library</button>
-            <button class="navbar-genres-btn">Drama</button>
-            <button class="navbar-genres-btn">Comedy</button>
-            <button class="navbar-genres-btn">Action</button>
-            <button class="navbar-genres-btn">Sci-Fi</button>
-            <button class="navbar-genres-btn">Anime</button>
-            <button class="navbar-genres-btn">Fantasy</button>
+            <button class="navbar-genres-btn" id="drama">Drama</button>
+            <button class="navbar-genres-btn" id="comedy">Comedy</button>
+            <button class="navbar-genres-btn" id="action">Action</button>
+            <button class="navbar-genres-btn" id="science-fiction">Sci-Fi</button>
+            <button class="navbar-genres-btn" id="animation">Animation</button>
+            <button class="navbar-genres-btn" id="fantasy">Fantasy</button>
+        </div>
+        <div class="home-movie">
+            <button class="navbar-home-movie-btn">Add Home Movie</button>
         </div>
     </div>
     <div class ="movie-card-row">
-        <div class="movie-container"></div>
         <div id="result-container"></div>
     </div>
 </div>

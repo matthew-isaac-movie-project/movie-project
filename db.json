@@ -1,46 +1,82 @@
 {
   "favorites": [
     {
-      "id": 1,
-      "title": "The Shawshank Redemption",
-      "genre": "Drama",
-      "rating": 5,
-      "image": "/images/movie-posters/shawshank-redemption.jpg"
-    },
-    {
-      "id": 2,
-      "title": "The Godfather",
-      "genre": "Crime",
-      "rating": 5,
-      "image": "/images/movie-posters/godfather.jpg"
-    },
-    {
       "title": "Shrek",
       "genre": "Comedy",
-      "rating": 2,
+      "rating": "5",
       "id": 3,
       "image": "/images/movie-posters/shrek.jpg"
     },
     {
-      "title": "Empire Strikes Back",
-      "genre": "Fantasy",
-      "rating": 5,
-      "id": 4,
-      "image": "/images/movie-posters/empire-strikes-back.jpg"
+      "title": "Dragon Ball Super: Super Hero",
+      "genre": [
+        "Animation",
+        "Science Fiction",
+        "Action"
+      ],
+      "rating": "4",
+      "image": "https://image.tmdb.org/t/p/w500/okqoqyEVnQMfIk7xI13MsQx3sha.jpg",
+      "id": 7
     },
     {
-      "title": "Return of the Jedi",
+      "title": "Codeup Graduation",
       "genre": "Fantasy",
-      "rating": 5,
-      "id": 5,
-      "image": "/images/movie-posters/return-of-the-jedi.jpg"
+      "rating": "4",
+      "image": "/images/vhs.jpg",
+      "id": 10
     },
     {
-      "title": "A New Hope",
-      "genre": "Fantasy",
-      "rating": 5,
-      "id": 5,
-      "image": "/images/movie-posters/A-new-hope.jpg"
+      "title": "The Godfather",
+      "genre": [
+        "Drama",
+        "Crime"
+      ],
+      "rating": "4",
+      "image": "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
+      "id": 14
+    },
+    {
+      "title": "The Godfather Part II",
+      "genre": [
+        "Drama",
+        "Crime"
+      ],
+      "rating": "1",
+      "image": "https://image.tmdb.org/t/p/w500/hek3koDUyRQk7FIhPXsa6mT2Zc3.jpg",
+      "id": 15
+    },
+    {
+      "title": "3 Supermen Against Godfather",
+      "genre": [
+        "Comedy",
+        "Crime",
+        "Science Fiction"
+      ],
+      "rating": "1",
+      "image": "https://image.tmdb.org/t/p/w500/pdSmE2q38qFvI7Ok2Jmzlg65QUs.jpg",
+      "id": 16
+    },
+    {
+      "title": "Superman",
+      "genre": [
+        "Science Fiction",
+        "Action",
+        "Adventure"
+      ],
+      "rating": "5",
+      "image": "https://image.tmdb.org/t/p/w500/d7px1FQxW4tngdACVRsCSaZq0Xl.jpg",
+      "id": 17
+    },
+    {
+      "title": "Man of Steel",
+      "genre": [
+        "Action",
+        "Adventure",
+        "Science Fiction"
+      ],
+      "rating": "5",
+      "image": "https://image.tmdb.org/t/p/w500/dksTL9NXc3GqPBRHYHcy1aIwjS.jpg",
+      "id": 18
     }
   ]
 }

@@ -70,7 +70,7 @@ function searchMovie() {
 
             // Add the add button, rating label, and select element to the div
             const buttonRow = document.createElement('div');
-            buttonRow.classList.add('button', 'row');
+            buttonRow.classList.add('button-row');
             const addButton = document.createElement('button');
             addButton.classList.add('add-btn');
             addButton.innerText = 'Add';
@@ -201,21 +201,806 @@ button.addEventListener('click', () => {
           <p class="movie-genre">Genre: ${movie.genre}</p>
           <p class="library-rating">Rating: ${movie.rating}</p>
           <div class="button-row">
-                <button class="delete-btn">Delete</button>
-                <button class="edit-btn">Edit</button>
-                <select id="rating" name="rating">
-                  <option value="1">1 star</option>
-                  <option value="2">2 stars</option>
-                  <option value="3">3 stars</option>
-                  <option value="4">4 stars</option>
-                  <option value="5">5 stars</option>
-                </select>
-            </div>
+            <button class="delete-btn" data-id="${movie.id}">Delete</button>
+            <button class="edit-btn">Edit</button>
+            <select id="rating" name="rating">
+              <option value="1">1 star</option>
+              <option value="2">2 stars</option>
+              <option value="3">3 stars</option>
+              <option value="4">4 stars</option>
+              <option value="5">5 stars</option>
+            </select>
+          </div>
         `;
+
                 container.appendChild(movieElement);
+
+                // Add event listener to the "Delete" button
+                const deleteBtn = movieElement.querySelector('.delete-btn');
+                deleteBtn.addEventListener('click', () => {
+                    const movieId = deleteBtn.getAttribute('data-id');
+                    fetch(`http://localhost:3000/favorites/${movieId}`, {
+                        method: 'DELETE'
+                    })
+                        .then(() => {
+                            // Remove the individual movie element from the page
+                            movieElement.remove();
+                        })
+                        .catch(error => {
+                            console.error('Error deleting movie:', error);
+                        });
+                });
+
+                // Add event listener to the "Edit" button
+                const editBtn = movieElement.querySelector('.edit-btn');
+                const ratingSelect = movieElement.querySelector('#rating');
+                editBtn.addEventListener('click', () => {
+                    const movieId = deleteBtn.getAttribute('data-id');
+                    const newRating = ratingSelect.value;
+                    fetch(`http://localhost:3000/favorites/${movieId}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ rating: newRating })
+                    })
+                        .then(() => {
+                            // Reset the rating of the individual movie element
+                            const libraryRating = movieElement.querySelector('.library-rating');
+                            libraryRating.textContent = `Rating: ${newRating}`;
+                        })
+                        .catch(error => {
+                            console.error('Error updating rating:', error);
+                        });
+                });
             });
         })
         .catch(error => {
             console.error('Error fetching movie data:', error);
         });
+});
+
+const button1 = document.querySelector('#drama');
+
+button1.addEventListener('click', () => {
+    fetch('http://localhost:3000/favorites')
+        .then(response => response.json())
+        .then(data => {
+            // Clear the container first
+            container.innerHTML = '';
+
+            // Filter the movie data to only include those with a genre of "Drama"
+            const dramaMovies = data.filter(movie => {
+                return Array.isArray(movie.genre) ? movie.genre.includes('Drama') : movie.genre === 'Drama';
+            });
+
+            // Loop through the filtered array and create a new HTML element for each movie
+            dramaMovies.forEach(movie => {
+                const movieElement = document.createElement('div');
+                movieElement.classList.add('movie-card');
+                movieElement.innerHTML = `
+          <h2 class="movie-title">${movie.title}</h2>
+          <img src="${movie.image}" alt="${movie.title}">
+          <p class="movie-genre">Genre: ${movie.genre}</p>
+          <p class="library-rating">Rating: ${movie.rating}</p>
+          <div class="button-row">
+            <button class="delete-btn" data-id="${movie.id}">Delete</button>
+            <button class="edit-btn">Edit</button>
+            <select id="rating" name="rating">
+              <option value="1">1 star</option>
+              <option value="2">2 stars</option>
+              <option value="3">3 stars</option>
+              <option value="4">4 stars</option>
+              <option value="5">5 stars</option>
+            </select>
+          </div>
+        `;
+                container.appendChild(movieElement);
+
+                // Add event listeners to the delete and edit buttons for each movie element
+                const deleteBtn = movieElement.querySelector('.delete-btn');
+                const editBtn = movieElement.querySelector('.edit-btn');
+                const ratingSelect = movieElement.querySelector('#rating');
+
+                deleteBtn.addEventListener('click', () => {
+                    // Remove the movie element from the DOM
+                    movieElement.remove();
+
+                    // Send a DELETE request to the server to delete the movie from the database
+                    fetch(`http://localhost:3000/favorites/${movie.id}`, {
+                        method: 'DELETE'
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Movie deleted:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error deleting movie:', error);
+                        });
+                });
+
+                editBtn.addEventListener('click', () => {
+                    // Update the rating of the movie element and send a PUT request to the server to update the rating in the database
+                    movie.rating = ratingSelect.value;
+                    const libraryRating = movieElement.querySelector('.library-rating');
+                    libraryRating.textContent = `Rating: ${movie.rating}`;
+
+                    fetch(`http://localhost:3000/favorites/${movie.id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(movie)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Movie updated:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error updating movie:', error);
+                        });
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching movie data:', error);
+        });
+});
+
+
+const button2 = document.querySelector('#comedy');
+
+button2.addEventListener('click', () => {
+    fetch('http://localhost:3000/favorites')
+        .then(response => response.json())
+        .then(data => {
+            // Clear the container first
+            container.innerHTML = '';
+
+            // Filter the movie data to only include those with a genre of "Drama"
+            const dramaMovies = data.filter(movie => {
+                return Array.isArray(movie.genre) ? movie.genre.includes('Comedy') : movie.genre === 'Comedy';
+            });
+
+            // Loop through the filtered array and create a new HTML element for each movie
+            dramaMovies.forEach(movie => {
+                const movieElement = document.createElement('div');
+                movieElement.classList.add('movie-card');
+                movieElement.innerHTML = `
+          <h2 class="movie-title">${movie.title}</h2>
+          <img src="${movie.image}" alt="${movie.title}">
+          <p class="movie-genre">Genre: ${movie.genre}</p>
+          <p class="library-rating">Rating: ${movie.rating}</p>
+          <div class="button-row">
+            <button class="delete-btn" data-id="${movie.id}">Delete</button>
+            <button class="edit-btn">Edit</button>
+            <select id="rating" name="rating">
+              <option value="1">1 star</option>
+              <option value="2">2 stars</option>
+              <option value="3">3 stars</option>
+              <option value="4">4 stars</option>
+              <option value="5">5 stars</option>
+            </select>
+          </div>
+        `;
+                container.appendChild(movieElement);
+
+                // Add event listeners to the delete and edit buttons for each movie element
+                const deleteBtn = movieElement.querySelector('.delete-btn');
+                const editBtn = movieElement.querySelector('.edit-btn');
+                const ratingSelect = movieElement.querySelector('#rating');
+
+                deleteBtn.addEventListener('click', () => {
+                    // Remove the movie element from the DOM
+                    movieElement.remove();
+
+                    // Send a DELETE request to the server to delete the movie from the database
+                    fetch(`http://localhost:3000/favorites/${movie.id}`, {
+                        method: 'DELETE'
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Movie deleted:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error deleting movie:', error);
+                        });
+                });
+
+                editBtn.addEventListener('click', () => {
+                    // Update the rating of the movie element and send a PUT request to the server to update the rating in the database
+                    movie.rating = ratingSelect.value;
+                    const libraryRating = movieElement.querySelector('.library-rating');
+                    libraryRating.textContent = `Rating: ${movie.rating}`;
+
+                    fetch(`http://localhost:3000/favorites/${movie.id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(movie)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Movie updated:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error updating movie:', error);
+                        });
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching movie data:', error);
+        });
+});
+
+const button3 = document.querySelector('#action');
+
+button3.addEventListener('click', () => {
+    fetch('http://localhost:3000/favorites')
+        .then(response => response.json())
+        .then(data => {
+            // Clear the container first
+            container.innerHTML = '';
+
+            // Filter the movie data to only include those with a genre of "Drama"
+            const dramaMovies = data.filter(movie => {
+                return Array.isArray(movie.genre) ? movie.genre.includes('Action') : movie.genre === 'Action';
+            });
+
+            // Loop through the filtered array and create a new HTML element for each movie
+            dramaMovies.forEach(movie => {
+                const movieElement = document.createElement('div');
+                movieElement.classList.add('movie-card');
+                movieElement.innerHTML = `
+          <h2 class="movie-title">${movie.title}</h2>
+          <img src="${movie.image}" alt="${movie.title}">
+          <p class="movie-genre">Genre: ${movie.genre}</p>
+          <p class="library-rating">Rating: ${movie.rating}</p>
+          <div class="button-row">
+            <button class="delete-btn" data-id="${movie.id}">Delete</button>
+            <button class="edit-btn">Edit</button>
+            <select id="rating" name="rating">
+              <option value="1">1 star</option>
+              <option value="2">2 stars</option>
+              <option value="3">3 stars</option>
+              <option value="4">4 stars</option>
+              <option value="5">5 stars</option>
+            </select>
+          </div>
+        `;
+                container.appendChild(movieElement);
+
+                // Add event listeners to the delete and edit buttons for each movie element
+                const deleteBtn = movieElement.querySelector('.delete-btn');
+                const editBtn = movieElement.querySelector('.edit-btn');
+                const ratingSelect = movieElement.querySelector('#rating');
+
+                deleteBtn.addEventListener('click', () => {
+                    // Remove the movie element from the DOM
+                    movieElement.remove();
+
+                    // Send a DELETE request to the server to delete the movie from the database
+                    fetch(`http://localhost:3000/favorites/${movie.id}`, {
+                        method: 'DELETE'
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Movie deleted:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error deleting movie:', error);
+                        });
+                });
+
+                editBtn.addEventListener('click', () => {
+                    // Update the rating of the movie element and send a PUT request to the server to update the rating in the database
+                    movie.rating = ratingSelect.value;
+                    const libraryRating = movieElement.querySelector('.library-rating');
+                    libraryRating.textContent = `Rating: ${movie.rating}`;
+
+                    fetch(`http://localhost:3000/favorites/${movie.id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(movie)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Movie updated:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error updating movie:', error);
+                        });
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching movie data:', error);
+        });
+});
+
+const button4 = document.querySelector('#science-fiction');
+
+button4.addEventListener('click', () => {
+    fetch('http://localhost:3000/favorites')
+        .then(response => response.json())
+        .then(data => {
+            // Clear the container first
+            container.innerHTML = '';
+
+            // Filter the movie data to only include those with a genre of "Science Fiction"
+            const dramaMovies = data.filter(movie => {
+                return Array.isArray(movie.genre) ? movie.genre.includes('Science Fiction') : movie.genre === 'Science Fiction';
+            });
+
+            // Loop through the filtered array and create a new HTML element for each movie
+            dramaMovies.forEach(movie => {
+                const movieElement = document.createElement('div');
+                movieElement.classList.add('movie-card');
+                movieElement.innerHTML = `
+          <h2 class="movie-title">${movie.title}</h2>
+          <img src="${movie.image}" alt="${movie.title}">
+          <p class="movie-genre">Genre: ${movie.genre}</p>
+          <p class="library-rating">Rating: ${movie.rating}</p>
+          <div class="button-row">
+            <button class="delete-btn" data-id="${movie.id}">Delete</button>
+            <button class="edit-btn">Edit</button>
+            <select id="rating" name="rating">
+              <option value="1">1 star</option>
+              <option value="2">2 stars</option>
+              <option value="3">3 stars</option>
+              <option value="4">4 stars</option>
+              <option value="5">5 stars</option>
+            </select>
+          </div>
+        `;
+                container.appendChild(movieElement);
+
+                // Add event listeners to the delete and edit buttons for each movie element
+                const deleteBtn = movieElement.querySelector('.delete-btn');
+                const editBtn = movieElement.querySelector('.edit-btn');
+                const ratingSelect = movieElement.querySelector('#rating');
+
+                deleteBtn.addEventListener('click', () => {
+                    // Remove the movie element from the DOM
+                    movieElement.remove();
+
+                    // Send a DELETE request to the server to delete the movie from the database
+                    fetch(`http://localhost:3000/favorites/${movie.id}`, {
+                        method: 'DELETE'
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Movie deleted:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error deleting movie:', error);
+                        });
+                });
+
+                editBtn.addEventListener('click', () => {
+                    // Update the rating of the movie element and send a PUT request to the server to update the rating in the database
+                    movie.rating = ratingSelect.value;
+                    const libraryRating = movieElement.querySelector('.library-rating');
+                    libraryRating.textContent = `Rating: ${movie.rating}`;
+
+                    fetch(`http://localhost:3000/favorites/${movie.id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(movie)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Movie updated:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error updating movie:', error);
+                        });
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching movie data:', error);
+        });
+});
+
+
+const button5 = document.querySelector('#animation');
+
+button5.addEventListener('click', () => {
+    fetch('http://localhost:3000/favorites')
+        .then(response => response.json())
+        .then(data => {
+            // Clear the container first
+            container.innerHTML = '';
+
+            // Filter the movie data to only include those with a genre of "Animation"
+            const dramaMovies = data.filter(movie => {
+                return Array.isArray(movie.genre) ? movie.genre.includes('Animation') : movie.genre === 'Animation';
+            });
+
+            // Loop through the filtered array and create a new HTML element for each movie
+            dramaMovies.forEach(movie => {
+                const movieElement = document.createElement('div');
+                movieElement.classList.add('movie-card');
+                movieElement.innerHTML = `
+          <h2 class="movie-title">${movie.title}</h2>
+          <img src="${movie.image}" alt="${movie.title}">
+          <p class="movie-genre">Genre: ${movie.genre}</p>
+          <p class="library-rating">Rating: ${movie.rating}</p>
+          <div class="button-row">
+            <button class="delete-btn" data-id="${movie.id}">Delete</button>
+            <button class="edit-btn">Edit</button>
+            <select id="rating" name="rating">
+              <option value="1">1 star</option>
+              <option value="2">2 stars</option>
+              <option value="3">3 stars</option>
+              <option value="4">4 stars</option>
+              <option value="5">5 stars</option>
+            </select>
+          </div>
+        `;
+                container.appendChild(movieElement);
+
+                // Add event listeners to the delete and edit buttons for each movie element
+                const deleteBtn = movieElement.querySelector('.delete-btn');
+                const editBtn = movieElement.querySelector('.edit-btn');
+                const ratingSelect = movieElement.querySelector('#rating');
+
+                deleteBtn.addEventListener('click', () => {
+                    // Remove the movie element from the DOM
+                    movieElement.remove();
+
+                    // Send a DELETE request to the server to delete the movie from the database
+                    fetch(`http://localhost:3000/favorites/${movie.id}`, {
+                        method: 'DELETE'
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Movie deleted:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error deleting movie:', error);
+                        });
+                });
+
+                editBtn.addEventListener('click', () => {
+                    // Update the rating of the movie element and send a PUT request to the server to update the rating in the database
+                    movie.rating = ratingSelect.value;
+                    const libraryRating = movieElement.querySelector('.library-rating');
+                    libraryRating.textContent = `Rating: ${movie.rating}`;
+
+                    fetch(`http://localhost:3000/favorites/${movie.id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(movie)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Movie updated:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error updating movie:', error);
+                        });
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching movie data:', error);
+        });
+});
+
+const button6 = document.querySelector('#fantasy');
+
+button6.addEventListener('click', () => {
+    fetch('http://localhost:3000/favorites')
+        .then(response => response.json())
+        .then(data => {
+            // Clear the container first
+            container.innerHTML = '';
+
+            // Filter the movie data to only include those with a genre of "Fantasy"
+            const dramaMovies = data.filter(movie => {
+                return Array.isArray(movie.genre) ? movie.genre.includes('Fantasy') : movie.genre === 'Fantasy';
+            });
+
+            // Loop through the filtered array and create a new HTML element for each movie
+            dramaMovies.forEach(movie => {
+                const movieElement = document.createElement('div');
+                movieElement.classList.add('movie-card');
+                movieElement.innerHTML = `
+          <h2 class="movie-title">${movie.title}</h2>
+          <img src="${movie.image}" alt="${movie.title}">
+          <p class="movie-genre">Genre: ${movie.genre}</p>
+          <p class="library-rating">Rating: ${movie.rating}</p>
+          <div class="button-row">
+            <button class="delete-btn" data-id="${movie.id}">Delete</button>
+            <button class="edit-btn">Edit</button>
+            <select id="rating" name="rating">
+              <option value="1">1 star</option>
+              <option value="2">2 stars</option>
+              <option value="3">3 stars</option>
+              <option value="4">4 stars</option>
+              <option value="5">5 stars</option>
+            </select>
+          </div>
+        `;
+                container.appendChild(movieElement);
+
+                // Add event listeners to the delete and edit buttons for each movie element
+                const deleteBtn = movieElement.querySelector('.delete-btn');
+                const editBtn = movieElement.querySelector('.edit-btn');
+                const ratingSelect = movieElement.querySelector('#rating');
+
+                deleteBtn.addEventListener('click', () => {
+                    // Remove the movie element from the DOM
+                    movieElement.remove();
+
+                    // Send a DELETE request to the server to delete the movie from the database
+                    fetch(`http://localhost:3000/favorites/${movie.id}`, {
+                        method: 'DELETE'
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Movie deleted:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error deleting movie:', error);
+                        });
+                });
+
+                editBtn.addEventListener('click', () => {
+                    // Update the rating of the movie element and send a PUT request to the server to update the rating in the database
+                    movie.rating = ratingSelect.value;
+                    const libraryRating = movieElement.querySelector('.library-rating');
+                    libraryRating.textContent = `Rating: ${movie.rating}`;
+
+                    fetch(`http://localhost:3000/favorites/${movie.id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(movie)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Movie updated:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error updating movie:', error);
+                        });
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching movie data:', error);
+        });
+});
+
+
+
+// const searchBar = document.querySelector('.search-favorites');
+// const searchBtn = document.querySelector('#favorite-search-btn');
+// searchBtn.addEventListener('click', () => {
+//     const searchValue = searchBar.value.toLowerCase().trim();
+//
+//     fetch('http://localhost:3000/favorites')
+//         .then(response => response.json())
+//         .then(data => {
+//             // Clear the container first
+//             container.innerHTML = '';
+//
+//             // Filter the movie data based on the search value
+//             const filteredData = data.filter(movie => {
+//                 return movie.title.toLowerCase().includes(searchValue);
+//             });
+//
+//             // If no movies were found, display a message
+//             if (filteredData.length === 0) {
+//                 const noResult = document.createElement('p');
+//                 noResult.innerText = 'No movie found';
+//                 container.appendChild(noResult);
+//                 return;
+//             }
+//
+//             // Loop through the filtered movie data and create a new HTML element for each movie
+//             filteredData.forEach(movie => {
+//                 const movieCard = document.createElement('div');
+//                 movieCard.classList.add('movie-card');
+//                 movieCard.innerHTML = `
+//           <h2 class="movie-title">${movie.title}</h2>
+//           <img src="${movie.image}" alt="${movie.title}">
+//           <p class="movie-genre">Genre: ${movie.genre}</p>
+//           <p class="library-rating">Rating: ${movie.rating}</p>
+//           <div class="button-row">
+//             <button class="delete-btn" data-id="${movie.id}">Delete</button>
+//             <button class="edit-btn">Edit</button>
+//             <select id="rating" name="rating">
+//               <option value="1">1 star</option>
+//               <option value="2">2 stars</option>
+//               <option value="3">3 stars</option>
+//               <option value="4">4 stars</option>
+//               <option value="5">5 stars</option>
+//             </select>
+//           </div>
+//         `;
+//                 container.appendChild(movieCard);
+//             });
+//         })
+//         .catch(error => {
+//             console.error('Error fetching movie data:', error);
+//         });
+// });
+
+const searchBar = document.querySelector('.search-favorites');
+const searchBtn = document.querySelector('#favorite-search-btn');
+
+// Function to refresh the movie list with the provided data
+function refreshMovieList(movies) {
+    // Clear the container first
+    container.innerHTML = '';
+
+    // If no movies were found, display a message
+    if (movies.length === 0) {
+        const noResult = document.createElement('p');
+        noResult.innerText = 'No movie found';
+        container.appendChild(noResult);
+        return;
+    }
+
+    // Loop through the filtered movie data and create a new HTML element for each movie
+    movies.forEach(movie => {
+        const movieCard = document.createElement('div');
+        movieCard.classList.add('movie-card');
+        movieCard.innerHTML = `
+          <h2 class="movie-title">${movie.title}</h2>
+          <img src="${movie.image}" alt="${movie.title}">
+          <p class="movie-genre">Genre: ${movie.genre}</p>
+          <p class="library-rating">Rating: ${movie.rating}</p>
+          <div class="button-row">
+            <button class="delete-btn" data-id="${movie.id}">Delete</button>
+            <button class="edit-btn">Edit</button>
+            <select id="rating" name="rating">
+              <option value="1">1 star</option>
+              <option value="2">2 stars</option>
+              <option value="3">3 stars</option>
+              <option value="4">4 stars</option>
+              <option value="5">5 stars</option>
+            </select>
+          </div>
+        `;
+        container.appendChild(movieCard);
+
+        // Add event listener to delete button
+        const deleteButton = movieCard.querySelector('.delete-btn');
+        deleteButton.addEventListener('click', () => {
+            fetch(`http://localhost:3000/favorites/${movie.id}`, {
+                method: 'DELETE'
+            })
+                .then(() => {
+                    movieCard.remove();
+                })
+                .catch(error => {
+                    console.error('Error deleting movie:', error);
+                });
+        });
+
+        // Add event listener to edit button
+        const editButton = movieCard.querySelector('.edit-btn');
+        editButton.addEventListener('click', () => {
+            const ratingSelect = movieCard.querySelector('#rating');
+            const newRating = ratingSelect.value;
+            fetch(`http://localhost:3000/favorites/${movie.id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ rating: newRating })
+            })
+                .then(() => {
+                    // Update the movie's rating in the UI
+                    const ratingElement = movieCard.querySelector('.library-rating');
+                    ratingElement.textContent = `Rating: ${newRating}`;
+                })
+                .catch(error => {
+                    console.error('Error updating movie:', error);
+                });
+        });
+    });
+}
+
+searchBtn.addEventListener('click', () => {
+    const searchValue = searchBar.value.toLowerCase().trim();
+
+    fetch('http://localhost:3000/favorites')
+        .then(response => response.json())
+        .then(data => {
+            // Filter the movie data based on the search value
+            const filteredData = data.filter(movie => {
+                return movie.title.toLowerCase().includes(searchValue);
+            });
+
+            // Refresh the movie list with the filtered data
+            refreshMovieList(filteredData);
+        })
+        .catch(error => {
+            console.error('Error fetching movie data:', error);
+        });
+});
+
+const addMovieForm = `
+  <form id="add-movie-form">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+    <label for="genre">Genre:</label>
+    <input type="text" id="genre" name="genre" required>
+    <label for="rating">Rating:</label>
+    <input type="number" id="rating" name="rating" min="1" max="5" required>
+    <button type="submit">Add Movie</button>
+  </form>
+`;
+
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.querySelector('#result-container');
+    const addMovieForm = `
+          <form id="add-movie-form">
+            <label id="home-movie-title" for="home-movie-title">Title:</label>
+            <input type="text" id="title" name="title" required>
+            <label id="home-movie-title" for="home-movie-genre">Genre:</label>
+            <input type="text" id="genre" name="genre" required>
+            <label id="home-movie-title" for="home-movie-rating">Rating:</label>
+            <input type="number" id="rating" name="rating" min="1" max="5" required>
+            <button id="home-movie-submit" type="home-movie-submit">Submit Movie</button>
+          </form>
+        `;
+
+    const addHomeMovie = () => {
+        container.innerHTML = addMovieForm;
+
+        const form = document.querySelector('#add-movie-form');
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const title = document.querySelector('#title').value;
+            const genre = document.querySelector('#genre').value;
+            const rating = document.querySelector('#rating').value;
+
+            // Add the movie data to the database
+            fetch('http://localhost:3000/favorites', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title,
+                    genre,
+                    rating,
+                    image: '/images/vhs.jpg'
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('New movie added:', data);
+                    container.innerHTML = `<p>New movie added: ${data.title}</p>`;
+                })
+                .catch(error => {
+                    console.error('Error adding movie:', error);
+                    container.innerHTML = `<p>Error adding movie: ${error.message}</p>`;
+                });
+        });
+    };
+
+    const homeMovieBtn = document.querySelector('.navbar-home-movie-btn');
+    homeMovieBtn.addEventListener('click', addHomeMovie);
+});
+
+let loaderContainer = document.querySelector('.loader-container');
+window.addEventListener('load', () => {
+    setTimeout(function(){
+        loaderContainer.classList.add('loader-container-hidden');
+    }, 2000)
 });
