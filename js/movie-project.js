@@ -2,18 +2,18 @@ import * as movieUtils from './movies.js'
 
 (async()=>{
 
-    document.querySelector('button').addEventListener('click', async function(){
-        const title = document.querySelector('#title').value;
-        const genre = document.querySelector('#genre').value;
-        const rating = parseFloat(document.querySelector('#rating').value);
-        let movieData = {
-            title,
-            genre,
-            rating
-        }
-        let result = await movieUtils.setFavorite(movieData);
-        console.log(result);
-    });
+    // document.querySelector('button').addEventListener('click', async function(){
+    //     const title = document.querySelector('#title').value;
+    //     const genre = document.querySelector('#genre').value;
+    //     const rating = parseFloat(document.querySelector('#rating').value);
+    //     let movieData = {
+    //         title,
+    //         genre,
+    //         rating
+    //     }
+    //     let result = await movieUtils.setFavorite(movieData);
+    //     console.log(result);
+    // });
 
 
     let favorites = await movieUtils.getFavorites();
@@ -33,86 +33,88 @@ document.getElementById('search-btn').addEventListener('click', searchMovie);
 
 function searchMovie() {
     // Get the search query from the search bar
+
     const searchQuery = document.getElementById('search-bar').value;
 
     // Build the API URL with the search query and API key
-    const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${MOVIEDC_APPID}&query=${searchQuery}`;
+    const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${MOVIE_DB_ID}&query=${searchQuery}`;
 
     // Make the API request
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
             // Get the first movie result from the API response
-            const movie = data.results[0];
-            console.log(data.results)
-            // Create a div to display the movie information
-            const movieDiv = document.createElement('div');
-            movieDiv.classList.add('movie-card');
+            let movie = data.results[0];
+            console.log(movie);
+                // Create a div to display the movie information
+                const movieDiv = document.createElement('div');
+                movieDiv.classList.add('movie-card');
 
-            // Add the movie title to the div
-            const titleElement = document.createElement('h2');
-            titleElement.innerText = movie.title;
-            titleElement.classList.add('movie-title');
-            movieDiv.appendChild(titleElement);
+                // Add the movie title to the div
+                const titleElement = document.createElement('h2');
+                titleElement.innerText = movie.title;
+                titleElement.classList.add('movie-title');
+                movieDiv.appendChild(titleElement);
 
-            // Add the movie poster to the div
-            const posterUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-            const posterElement = document.createElement('img');
-            posterElement.src = posterUrl;
-            movieDiv.appendChild(posterElement);
+                // Add the movie poster to the div
+                const posterUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+                const posterElement = document.createElement('img');
+                posterElement.src = posterUrl;
+                movieDiv.appendChild(posterElement);
 
-            // Add the movie genre(s) to the div
-            const genresElement = document.createElement('p');
-            const genreNames = movie.genre_ids.map(id => getGenreName(id));
-            genresElement.innerText = `Genre: ${genreNames.join(', ')}`;
-            genresElement.classList.add('movie-genre');
-            movieDiv.appendChild(genresElement);
+                // Add the movie genre(s) to the div
+                const genresElement = document.createElement('p');
+                const genreNames = movie.genre_ids.map(id => getGenreName(id));
+                genresElement.innerText = `Genre: ${genreNames.join(', ')}`;
+                genresElement.classList.add('movie-genre');
+                movieDiv.appendChild(genresElement);
 
-            // Add the add button, rating label, and select element to the div
-            const buttonRow = document.createElement('div');
-            buttonRow.classList.add('button-row');
-            const addButton = document.createElement('button');
-            addButton.classList.add('add-btn');
-            addButton.innerText = 'Add';
-            const ratingLabel = document.createElement('label');
-            ratingLabel.setAttribute('for', 'rating');
-            ratingLabel.innerText = 'Movie Rating:';
-            ratingLabel.classList.add('white-text'); // Add a CSS class to set the font color to white
-            const ratingSelect = document.createElement('select');
-            ratingSelect.setAttribute('id', 'rating');
-            ratingSelect.setAttribute('name', 'rating');
-            ratingSelect.classList.add('rating-text'); // Add a CSS class to set the font color to white
-            const ratingOption1 = document.createElement('option');
-            ratingOption1.setAttribute('value', '1');
-            ratingOption1.innerText = '1 star';
-            const ratingOption2 = document.createElement('option');
-            ratingOption2.setAttribute('value', '2');
-            ratingOption2.innerText = '2 stars';
-            const ratingOption3 = document.createElement('option');
-            ratingOption3.setAttribute('value', '3');
-            ratingOption3.innerText = '3 stars';
-            const ratingOption4 = document.createElement('option');
-            ratingOption4.setAttribute('value', '4');
-            ratingOption4.innerText = '4 stars';
-            const ratingOption5 = document.createElement('option');
-            ratingOption5.setAttribute('value', '5');
-            ratingOption5.innerText = '5 stars';
-            ratingSelect.appendChild(ratingOption1);
-            ratingSelect.appendChild(ratingOption2);
-            ratingSelect.appendChild(ratingOption3);
-            ratingSelect.appendChild(ratingOption4);
-            ratingSelect.appendChild(ratingOption5);
-            buttonRow.appendChild(addButton);
-            buttonRow.appendChild(ratingLabel);
-            buttonRow.appendChild(ratingSelect);
-            movieDiv.appendChild(buttonRow);
+                // Add the add button, rating label, and select element to the div
+                const buttonRow = document.createElement('div');
+                buttonRow.classList.add('button-row');
+                const addButton = document.createElement('button');
+                addButton.classList.add('add-btn');
+                addButton.innerText = 'Add';
+                const ratingLabel = document.createElement('label');
+                ratingLabel.setAttribute('for', 'rating');
+                ratingLabel.innerText = 'Movie Rating:';
+                ratingLabel.classList.add('white-text'); // Add a CSS class to set the font color to white
+                const ratingSelect = document.createElement('select');
+                ratingSelect.setAttribute('id', 'rating');
+                ratingSelect.setAttribute('name', 'rating');
+                ratingSelect.classList.add('rating-text'); // Add a CSS class to set the font color to white
+                const ratingOption1 = document.createElement('option');
+                ratingOption1.setAttribute('value', '1');
+                ratingOption1.innerText = '1 star';
+                const ratingOption2 = document.createElement('option');
+                ratingOption2.setAttribute('value', '2');
+                ratingOption2.innerText = '2 stars';
+                const ratingOption3 = document.createElement('option');
+                ratingOption3.setAttribute('value', '3');
+                ratingOption3.innerText = '3 stars';
+                const ratingOption4 = document.createElement('option');
+                ratingOption4.setAttribute('value', '4');
+                ratingOption4.innerText = '4 stars';
+                const ratingOption5 = document.createElement('option');
+                ratingOption5.setAttribute('value', '5');
+                ratingOption5.innerText = '5 stars';
+                ratingSelect.appendChild(ratingOption1);
+                ratingSelect.appendChild(ratingOption2);
+                ratingSelect.appendChild(ratingOption3);
+                ratingSelect.appendChild(ratingOption4);
+                ratingSelect.appendChild(ratingOption5);
+                buttonRow.appendChild(addButton);
+                buttonRow.appendChild(ratingLabel);
+                buttonRow.appendChild(ratingSelect);
+                movieDiv.appendChild(buttonRow);
 
-            addButton.addEventListener('click', addMovie);
+                addButton.addEventListener('click', addMovie);
 
-            // Add the movie div to the HTML page
-            const resultContainer = document.getElementById('result-container');
-            resultContainer.innerHTML = '';
-            resultContainer.appendChild(movieDiv);
+                document.getElementById('result-container').innerHTML = '';
+
+                // Add the movie div to the HTML page
+                const resultContainer = document.getElementById('result-container');
+                resultContainer.appendChild(movieDiv);
         })
         .catch(error => console.error(error));
 }
@@ -185,6 +187,82 @@ const button = document.querySelector('.navbar-library-btn');
 const container = document.querySelector('#result-container');
 
 button.addEventListener('click', () => {
+    fetch('http://localhost:3000/favorites')
+        .then(response => response.json())
+        .then(data => {
+            // Clear the container first
+            container.innerHTML = '';
+
+            // Loop through the movie data and create a new HTML element for each movie
+            data.forEach(movie => {
+                const movieElement = document.createElement('div');
+                movieElement.classList.add('movie-card');
+                movieElement.innerHTML = `
+          <h2 class="movie-title">${movie.title}</h2>
+          <img src="${movie.image}" alt="${movie.title}">
+          <p class="movie-genre">Genre: ${movie.genre}</p>
+          <p class="library-rating">Rating: ${movie.rating}</p>
+          <div class="button-row">
+            <button class="delete-btn" data-id="${movie.id}">Delete</button>
+            <button class="edit-btn">Edit</button>
+            <select id="rating" name="rating">
+              <option value="1">1 star</option>
+              <option value="2">2 stars</option>
+              <option value="3">3 stars</option>
+              <option value="4">4 stars</option>
+              <option value="5">5 stars</option>
+            </select>
+          </div>
+        `;
+
+                container.appendChild(movieElement);
+
+                // Add event listener to the "Delete" button
+                const deleteBtn = movieElement.querySelector('.delete-btn');
+                deleteBtn.addEventListener('click', () => {
+                    const movieId = deleteBtn.getAttribute('data-id');
+                    fetch(`http://localhost:3000/favorites/${movieId}`, {
+                        method: 'DELETE'
+                    })
+                        .then(() => {
+                            // Remove the individual movie element from the page
+                            movieElement.remove();
+                        })
+                        .catch(error => {
+                            console.error('Error deleting movie:', error);
+                        });
+                });
+
+                // Add event listener to the "Edit" button
+                const editBtn = movieElement.querySelector('.edit-btn');
+                const ratingSelect = movieElement.querySelector('#rating');
+                editBtn.addEventListener('click', () => {
+                    const movieId = deleteBtn.getAttribute('data-id');
+                    const newRating = ratingSelect.value;
+                    fetch(`http://localhost:3000/favorites/${movieId}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ rating: newRating })
+                    })
+                        .then(() => {
+                            // Reset the rating of the individual movie element
+                            const libraryRating = movieElement.querySelector('.library-rating');
+                            libraryRating.textContent = `Rating: ${newRating}`;
+                        })
+                        .catch(error => {
+                            console.error('Error updating rating:', error);
+                        });
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching movie data:', error);
+        });
+});
+
+window.addEventListener('load', () => {
     fetch('http://localhost:3000/favorites')
         .then(response => response.json())
         .then(data => {
@@ -1004,3 +1082,13 @@ window.addEventListener('load', () => {
         loaderContainer.classList.add('loader-container-hidden');
     }, 2000)
 });
+
+document.querySelector('.navbar-header').addEventListener('click', ()=> {
+    document.querySelector('.navbar').classList.toggle('hidden');
+    document.querySelector('.opener').classList.toggle('hidden');
+})
+
+document.querySelector('.opener').addEventListener('click', ()=> {
+    document.querySelector('.opener').classList.toggle('hidden');
+    document.querySelector('.navbar').classList.toggle('hidden');
+})

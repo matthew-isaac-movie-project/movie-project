@@ -3,7 +3,7 @@
     {
       "title": "Shrek",
       "genre": "Comedy",
-      "rating": "5",
+      "rating": "3",
       "id": 3,
       "image": "/images/movie-posters/shrek.jpg"
     },
@@ -21,7 +21,7 @@
     {
       "title": "Codeup Graduation",
       "genre": "Fantasy",
-      "rating": "4",
+      "rating": "5",
       "image": "/images/vhs.jpg",
       "id": 10
     },
@@ -77,6 +77,37 @@
       "rating": "5",
       "image": "https://image.tmdb.org/t/p/w500/dksTL9NXc3GqPBRHYHcy1aIwjS.jpg",
       "id": 18
+    },
+    {
+      "title": "Tommy Boy",
+      "genre": [
+        "Comedy"
+      ],
+      "rating": "1",
+      "image": "https://image.tmdb.org/t/p/w500/cUvdzCbhLyYUAwbIkBjT3tC28cK.jpg",
+      "id": 19
+    },
+    {
+      "title": "Batman",
+      "genre": [
+        "Fantasy",
+        "Action",
+        "Crime"
+      ],
+      "rating": "4",
+      "image": "https://image.tmdb.org/t/p/w500/cij4dd21v2Rk2YtUQbV5kW69WB2.jpg",
+      "id": 20
+    },
+    {
+      "title": "Batman",
+      "genre": [
+        "Fantasy",
+        "Action",
+        "Crime"
+      ],
+      "rating": "1",
+      "image": "https://image.tmdb.org/t/p/w500/cij4dd21v2Rk2YtUQbV5kW69WB2.jpg",
+      "id": 21
     }
   ]
 }
