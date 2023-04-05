@@ -421,6 +421,8 @@ select {
     border-color: #0e0e0e;
     border-width: 10px;
     background-color: #E30A0A;
+    width: 200px;
+    margin-left: 400px;
 }
 
 #home-movie-title {

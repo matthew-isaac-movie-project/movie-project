@@ -65,7 +65,7 @@ function searchMovie() {
                 // Add the movie genre(s) to the div
                 const genresElement = document.createElement('p');
                 const genreNames = movie.genre_ids.map(id => getGenreName(id));
-                genresElement.innerText = `Genre: ${genreNames.join(', ')}`;
+                genresElement.innerText = `Genre: ${genreNames.slice(0,2).join(', ')}`;
                 genresElement.classList.add('movie-genre');
                 movieDiv.appendChild(genresElement);
 

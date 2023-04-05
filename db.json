@@ -8,17 +8,6 @@
       "image": "/images/movie-posters/shrek.jpg"
     },
     {
-      "title": "Dragon Ball Super: Super Hero",
-      "genre": [
-        "Animation",
-        "Science Fiction",
-        "Action"
-      ],
-      "rating": "4",
-      "image": "https://image.tmdb.org/t/p/w500/okqoqyEVnQMfIk7xI13MsQx3sha.jpg",
-      "id": 7
-    },
-    {
       "title": "Codeup Graduation",
       "genre": "Fantasy",
       "rating": "5",
@@ -99,15 +88,26 @@
       "id": 20
     },
     {
-      "title": "Batman",
+      "title": "Heat",
       "genre": [
-        "Fantasy",
         "Action",
-        "Crime"
+        "Crime",
+        "Drama",
+        "Thriller"
       ],
-      "rating": "1",
-      "image": "https://image.tmdb.org/t/p/w500/cij4dd21v2Rk2YtUQbV5kW69WB2.jpg",
-      "id": 21
+      "rating": "4",
+      "image": "https://image.tmdb.org/t/p/w500/umSVjVdbVwtx5ryCA2QXL44Durm.jpg",
+      "id": 22
+    },
+    {
+      "title": "Dragon Ball Super: Super Hero",
+      "genre": [
+        "Animation",
+        "Science Fiction"
+      ],
+      "rating": "5",
+      "image": "https://image.tmdb.org/t/p/w500/okqoqyEVnQMfIk7xI13MsQx3sha.jpg",
+      "id": 23
     }
   ]
 }
